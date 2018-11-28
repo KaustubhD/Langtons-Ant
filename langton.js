@@ -1,8 +1,8 @@
 let canvas = document.getElementById('can')
 let ctx = canvas.getContext('2d')
 
-let w = 400
-let h = 400
+let w = 50
+let h = 50
 
 canvas.width = w
 canvas.height = h
@@ -10,9 +10,9 @@ canvas.height = h
 canvas.style.backgroundColor = '#fff'
 
 let pixArray = new Array(w).fill(new Array(h).fill(0))
-console.log(pixArray)
-let posX = 200
-let posY = 200
+// console.log(pixArray)
+let posX = w / 2
+let posY = h / 2
 
 const UP = 0
 const RIGHT = 1
@@ -22,7 +22,7 @@ const LEFT = 3
 let state = UP
 
 function forward(){
-  console.log(`Got state ${state}`)
+  // console.log(`Got state ${state}`)
   switch(state){
     case 0:
       posY--
@@ -38,9 +38,9 @@ function forward(){
       break
   }
   if(posX > w - 1) posX = 0
-  if(posX < 0) pos = w - 1
+  else if(posX < 0) posX = w - 1
   if(posY > h - 1) posY = 0
-  if(posY < 0) posY = h - 1
+  else if(posY < 0) posY = h - 1
   // posX = posX % w
   // posY = posY % h
 }
@@ -60,26 +60,36 @@ function turnAntiClockwise(){
   // console.log(`sent with ${state}`)
 }
 
-pixArray[posX][posY] = 1
+// pixArray[posX][posY] = 1
 
-let pixPos
-let col
+let acInac = 0
+let col = true
 function draw(){
-  // console.log(`X is ${posX} and Y is ${posY}`)
-  if(pixArray[posX][posY] == 0){
+  console.log(pixArray)
+  // console.log(`\n\nX is ${posX} and Y is ${posY}`)
+  acInac = pixArray[posX][posY]
+  console.log(acInac)
+  if(acInac == 0){
+    console.log(`Found White ${posX} and Y is ${posY} and current state is ${state}`)
     turnClockwise()
+    
     pixArray[posX][posY] = 1
-    ctx.fillStyle = '#000'
+    // console.log(`X is ${posX} and Y is ${posY}`)
+    ctx.fillStyle = '#fff'
+    forward()
   }
-  if(pixArray[posX][posY] == 1){
+  else if(acInac == 1){
+    console.log(`Found Black ${posX} and Y is ${posY}  and current state is ${state}`)
     turnAntiClockwise()
     pixArray[posX][posY] = 0
-    ctx.fillStyle = '#fff'
+    ctx.fillStyle = '#000'
+    forward()
   }
+  // console.log(pixArray[posX][posY])
   // pixPos = i + (w * j)
   ctx.fillRect(posX, posY, 1, 1)
-  forward()
-
+  
+  
   // for(let i = 0; i < w; i++){
   //   for(let j = 0; j < h; j++){
 
@@ -91,6 +101,6 @@ function draw(){
 // let x = setInterval(function(){
 //   requestAnimationFrame(draw)
 // }, 60)
-for(let k = 0; k < 10; k++){
+for(let k = 0; k < 200; k++){
   draw()
 }
