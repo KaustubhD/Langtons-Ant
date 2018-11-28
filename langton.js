@@ -19,6 +19,8 @@ const RIGHT = 1
 const DOWN = 2
 const LEFT = 3
 
+let state = UP
+
 function forward(){
   console.log(`Got state ${state}`)
   switch(state){
@@ -44,40 +46,51 @@ function forward(){
 }
 
 function turnClockwise(){
-  state = (state + 1) > LEFT ? UP : state + 1
+  console.log(`called Clock with ${state}`)
+  state = state + 1
+  if(state > LEFT) state = UP
+  // state = (state + 1) > LEFT ? UP : state + 1
 }
 
 function turnAntiClockwise(){
-  state = (state - 1) < UP ? LEFT : state - 1
+  console.log(`called Anti with ${state}`)
+  state = state - 1
+  if(state < UP) state = LEFT
+  // state = (state - 1) < UP ? LEFT : state - 1
+  // console.log(`sent with ${state}`)
 }
 
 pixArray[posX][posY] = 1
 
-let state = UP
 let pixPos
 let col
 function draw(){
-  console.log(`X is ${posX} and Y is ${posY}`)
-  for(let i = 0; i < w; i++){
-    for(let j = 0; j < h; j++){
-      if(pixArray[posX][posY] == 1){
-        turnClockwise()
-        pixArray[posX][posY] = 0
-        ctx.fillStyle = '#fff'
-      }
-      if(pixArray[posX][posY] == 0){
-        turnAntiClockwise()
-        pixArray[posX][posY] = 1
-        ctx.fillStyle = '#000'
-      }
-      // pixPos = i + (w * j)
-      ctx.fillRect(posX, posY, 1, 1)
-      forward()
-    }
+  // console.log(`X is ${posX} and Y is ${posY}`)
+  if(pixArray[posX][posY] == 0){
+    turnClockwise()
+    pixArray[posX][posY] = 1
+    ctx.fillStyle = '#000'
   }
+  if(pixArray[posX][posY] == 1){
+    turnAntiClockwise()
+    pixArray[posX][posY] = 0
+    ctx.fillStyle = '#fff'
+  }
+  // pixPos = i + (w * j)
+  ctx.fillRect(posX, posY, 1, 1)
+  forward()
+
+  // for(let i = 0; i < w; i++){
+  //   for(let j = 0; j < h; j++){
+
+  //   }
+  // }
 
 }
 
-let x = setInterval(function(){
-  requestAnimationFrame(draw)
-}, 60)
+// let x = setInterval(function(){
+//   requestAnimationFrame(draw)
+// }, 60)
+for(let k = 0; k < 10; k++){
+  draw()
+}
