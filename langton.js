@@ -1,16 +1,24 @@
 let canvas = document.getElementById('can')
 let ctx = canvas.getContext('2d')
 
-let w = 50
-let h = 50
+let w = 400
+let h = 400
 
 canvas.width = w
 canvas.height = h
 
 canvas.style.backgroundColor = '#fff'
 
-let pixArray = new Array(w).fill(new Array(h).fill(0))
-// console.log(pixArray)
+let pixArray = Array.from({ length: w }, () => new Array(h).fill(0))
+
+// let pixArray = new Array(w).fill(new Array(h).fill(0))
+
+// let pixArray = new Array(w)
+// for(let i = 0; i < w; i++){
+//   pixArray[i] = new Array(h).fill(0)
+// }
+// pixArray = pixArray.map(el => { el = new Array(h).fill(0) })
+console.log(pixArray)
 let posX = w / 2
 let posY = h / 2
 
@@ -46,14 +54,14 @@ function forward(){
 }
 
 function turnClockwise(){
-  console.log(`called Clock with ${state}`)
+  // console.log(`called Clock with ${state}`)
   state = state + 1
   if(state > LEFT) state = UP
   // state = (state + 1) > LEFT ? UP : state + 1
 }
 
 function turnAntiClockwise(){
-  console.log(`called Anti with ${state}`)
+  // console.log(`called Anti with ${state}`)
   state = state - 1
   if(state < UP) state = LEFT
   // state = (state - 1) < UP ? LEFT : state - 1
@@ -65,12 +73,12 @@ function turnAntiClockwise(){
 let acInac = 0
 let col = true
 function draw(){
-  console.log(pixArray)
+  // console.log(pixArray)
   // console.log(`\n\nX is ${posX} and Y is ${posY}`)
   acInac = pixArray[posX][posY]
-  console.log(acInac)
+  // console.log(acInac)
   if(acInac == 0){
-    console.log(`Found White ${posX} and Y is ${posY} and current state is ${state}`)
+    // console.log(`Found White ${posX} and Y is ${posY} and current state is ${state}`)
     turnClockwise()
     
     pixArray[posX][posY] = 1
@@ -79,7 +87,7 @@ function draw(){
     forward()
   }
   else if(acInac == 1){
-    console.log(`Found Black ${posX} and Y is ${posY}  and current state is ${state}`)
+    // console.log(`Found Black ${posX} and Y is ${posY}  and current state is ${state}`)
     turnAntiClockwise()
     pixArray[posX][posY] = 0
     ctx.fillStyle = '#000'
@@ -95,12 +103,25 @@ function draw(){
 
   //   }
   // }
+  // checkOnes()
 
 }
-
-// let x = setInterval(function(){
-//   requestAnimationFrame(draw)
-// }, 60)
-for(let k = 0; k < 200; k++){
-  draw()
+function checkOnes(){
+  console.log('-----\n')
+  for(let i = 0; i < w; i++){
+    for(let j = 0; j < h; j++){
+      if(pixArray[i][j] == 1){
+        console.log(`One at ${i} ${j}`)
+      }
+    }
+  }
+  console.log('\n-----')
 }
+
+let x = setInterval(function(){
+  requestAnimationFrame(draw)
+}, 60)
+// let limit = 11000
+// for(let k = 0; k < limit; k++){
+//   draw()
+// }
