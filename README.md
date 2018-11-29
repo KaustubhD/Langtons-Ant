@@ -3,4 +3,4 @@
 A simple representation of Langton's Ant in JS.
 Read about [Langton's Ant](https://en.wikipedia.org/wiki/Langton%27s_ant)
 
-See the live implementation
+See the [live implementation](https://kaydee.github.io/Langtons-Ant)
