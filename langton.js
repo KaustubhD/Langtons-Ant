@@ -1,8 +1,8 @@
 let canvas = document.getElementById('can')
 let ctx = canvas.getContext('2d')
 
-let w = 400
-let h = 400
+let w = 600
+let h = 600
 
 canvas.width = w
 canvas.height = h
@@ -108,7 +108,9 @@ function draw(){
 }
 
 let x = setInterval(function(){
-  requestAnimationFrame(draw)
+  for(let i = 0; i < 150; i++){
+    draw()
+  }
 }, 60)
 // let limit = 11000
 // for(let k = 0; k < limit; k++){
