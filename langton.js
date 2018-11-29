@@ -103,19 +103,8 @@ function draw(){
 
   //   }
   // }
-  // checkOnes()
 
-}
-function checkOnes(){
-  console.log('-----\n')
-  for(let i = 0; i < w; i++){
-    for(let j = 0; j < h; j++){
-      if(pixArray[i][j] == 1){
-        console.log(`One at ${i} ${j}`)
-      }
-    }
-  }
-  console.log('\n-----')
+
 }
 
 let x = setInterval(function(){
